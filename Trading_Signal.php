@@ -1,10 +1,9 @@
 <?php
 $old = ini_set('memory_limit', '16000M');
 //This code is a simply demo for calculating some of the trading signals could be used in all-in-one screeners. 
-include_once('/home/gurufocu/update/morn/morningstar_config.php');
-include_once('/home/gurufocu/update/ftpclass.php');
-include_once "/home/gurufocu/public_html/include/db_connection_class.php";
-include_once "/home/gurufocu/public_html/include/mail_server.php";
+include_once('ftpclass.php');
+include_once "db_connection_class.php";
+include_once "mail_server.php";
 include_once ("../db_functions.php");
 set_time_limit(0);
 $date = date('Y-m-d',time());
@@ -12,7 +11,7 @@ $weekday = date('w',time());
 
 //First, we get the stockid from stock_list
 $start_time = time();
-$sql_getid = "SELECT stockid FROM gurufocu_main.stock_list WHERE price > 0.001 and delist_date = '0000-00-00';";
+$sql_getid = "SELECT stockid FROM stock_list WHERE price > 0.001 and delist_date = '0000-00-00';";
 $result_getid = mysql_query($sql_getid, DBConnection::getInstance() -> getDB('stock'));
 $nrow_getid = mysql_num_rows($result_getid);
 echo "\nThe total num of stocks in stock_list which have effective price is $nrow_getid.\n";
@@ -28,7 +27,7 @@ if ($nrow_getid !=0)
 // $price_array = array();
 // foreach($stockid as $file => $idarray)
 // {   
-//     $sql_getprice = "SELECT sec, date, high, low, close FROM gurufocu_price.price_all_".$file." WHERE date > '2022-10-01' ORDER BY sec, date desc;";
+//     $sql_getprice = "SELECT sec, date, high, low, close FROM price_all_".$file." WHERE date > '2022-10-01' ORDER BY sec, date desc;";
 //     $result_getprice = mysql_query($sql_getprice, DBConnection::getInstance() -> getDB('price'));
 //     $nrow_getprice = mysql_num_rows($result_getprice);
 //     $price_array_small = array();
@@ -74,7 +73,7 @@ foreach($stockid as $file => $idarray)
         unset($price_array_small);
         $sec = substr($sid, 4, 2);
         $sec = '3J';
-        $sql_getprice = "SELECT sec, date, high, low, close, volume FROM gurufocu_price.price_all_".$file." WHERE date > '2022-10-01' and sec = '$sec' ORDER BY sec, date ASC;";// As early as 2022-10-01, it is limilted by memory limit.
+        $sql_getprice = "SELECT sec, date, high, low, close, volume FROM price_all_".$file." WHERE date > '2022-10-01' and sec = '$sec' ORDER BY sec, date ASC;";// As early as 2022-10-01, it is limilted by memory limit.
         $result_getprice = mysql_query($sql_getprice, DBConnection::getInstance() -> getDB('price'));
         $nrow_getprice = mysql_num_rows($result_getprice);
         $price_array_small = array();
