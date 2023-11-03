@@ -1,9 +1,6 @@
 # Trading_Signal.php Using Guide
 
-This is an introducing document for explaining how Trading_Signal.php works. You can find the code via
-```
-/server3_gurufocu_new/update/Michael/Trading_Signal.php
-```
+This is an introducing document for explaining how Trading_Signal.php works. 
 
 ## Trading signals 
 
